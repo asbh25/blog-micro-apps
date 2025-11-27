@@ -1,4 +1,4 @@
-import { connectDB } from './config/database';
+import { connectDB } from '../../user-service/src/config/database';
 
 async function bootstrap() {
   await connectDB();
