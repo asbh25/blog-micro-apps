@@ -1,0 +1,52 @@
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+build/
+out/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Runtime files
+pids/
+*.pid
+*.seed
+tmp/
+temp/
+
+# Environment files
+.env
+.env.*.local
+.env.local
+.env.test
+
+# Coverage reports
+coverage/
+.nyc_output/
+
+# IDE/editor folders
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Misc
+.cache/
+.history/
+.sass-cache/
+*.sqlite
+*.sqlite3
