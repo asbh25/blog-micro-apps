@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { User } from '../models/user.model';
+import jwt from 'jsonwebtoken';
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   const { email, password } = req.body;
@@ -38,7 +39,16 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       res.status(401).json({ message: 'Invalid email or password' });
       return;
     }
-    res.status(200).json({ message: 'Login successful' });
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET!,
+      { expiresIn: '24h' }
+    );
+    res.status(200).json({
+      message: 'Login successful', 
+      token,
+      userId: user._id
+    });
   } catch (error) {
     res.status(500).json({ message: 'Error logging in', error });
   }
@@ -47,3 +57,14 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 export const healthCheck = (req: Request, res: Response): void => {
   res.status(200).json({ status: 'User service is healthy' });
 }
+
+export const validateJWT = async (req: Request, res: Response) => {
+  const { userId } = req.params;           // better name than user_id
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return res.json({ valid: false });     // 200 + false is standard in microservices
+  }
+
+  res.json({ valid: true });
+};

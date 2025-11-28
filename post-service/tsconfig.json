@@ -16,6 +16,6 @@
       "@/*": ["*"]
     }
   },
-  "include": ["src/**/*", "../user-service/src/controllers/user.controller.ts", "../user-service/src/config/database.ts"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }
