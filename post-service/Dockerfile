@@ -15,5 +15,5 @@ COPY --from=builder --chown=appuser:appgroup /app/dist ./dist
 COPY --from=builder --chown=appuser:appgroup /app/package*.json ./
 RUN npm ci --only=production && npm cache clean --force
 USER appuser
-EXPOSE 3002
+EXPOSE 3001
 CMD ["node", "dist/server.js"]

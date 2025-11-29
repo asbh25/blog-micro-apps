@@ -1,7 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
 import { Post } from '../models/post.model';
-import axios from 'axios';
 
 export const createPost = async (req: Request, res: Response) => {
   const userId = (req as any).userId;
@@ -15,4 +13,8 @@ export const createPost = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({ message: 'Error creating post', error });
   }
+}
+
+export const healthCheck = (req: Request, res: Response): void => {
+  res.status(200).json({ status: 'Post service is healthy' });
 }

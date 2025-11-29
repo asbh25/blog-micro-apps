@@ -1,0 +1,41 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - MONGO_URI=mongodb://mongo:27017/userdb
+      - JWT_SECRET=supersecretjwtkey123
+    depends_on:
+      - mongo
+    volumes:
+      - ./user-service/src:/app/src
+  post-service:
+    build: ./post-service
+    container_name: post-service
+    restart: unless-stopped
+    ports:
+      - "3002:3001"
+    environment:
+      - PORT=3001
+      - MONGO_URI=mongodb://mongo:27017/postdb
+      - JWT_SECRET=supersecretjwtkey123
+      - USER_SERVICE_URL=http://user-service:3001
+    depends_on:
+      - mongo
+      - user-service
+    volumes:
+      - ./post-service/src:/app/src
+volumes:
+  mongo-data:
